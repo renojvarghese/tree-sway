@@ -1,0 +1,35 @@
+$green-light: #026633;
+$green-dark: #085025;
+$brown-earthy: #963A2F;
+$brown-sandy: #ECB984;
+body {
+    margin:0;
+}
+.flex {
+    display:flex;
+    flex-wrap: wrap;
+}
+.container {
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+}
+
+.row-3 { height: 33%; }
+.row-9 { height: 67%; }
+
+.col-3 { width: 33%; }
+.col-9 { width: 67%; }
+
+#title {
+    background: $brown-sandy;
+}
+#video-feed {
+    background: $green-dark;
+}
+#visual {
+    background: $green-light;
+}
+#weather {
+    background: $brown-earthy; 
+}
