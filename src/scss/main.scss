@@ -1,10 +1,17 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900&display=swap');
 $green-light: #026633;
 $green-dark: #085025;
 $brown-earthy: #963A2F;
 $brown-sandy: #ECB984;
+$header-family: "Source Sans Pro", sans-serif;
+$regular-weight: 400;
+$semibold: 600;
+$bold: 700;
 body {
     margin:0;
+    font-family: $header-family
 }
+* { box-sizing: border-box; }
 .flex {
     display:flex;
     flex-wrap: wrap;
@@ -23,13 +30,65 @@ body {
 
 #title {
     background: $brown-sandy;
+    text-align: right;
+    padding: 20px 30px;
+}
+.title-header {
+    font-size: 3rem;
+    margin:15px;
+}
+.title-coord {
+    font-size: 2rem;
 }
 #video-feed {
     background: $green-dark;
+    position: relative;
+}
+.video-description-box {
+    position: absolute;
+    bottom:0px;
+    padding: 0px 20px;
+    background: $green-light;
+    width:100%;
+}
+.video-header{
+    text-transform: uppercase;
+    color:white;
+    text-align: center;
+    margin: 5px;
 }
 #visual {
     background: $green-light;
+    position: relative;
+}
+.visual-description-box {
+    position: absolute;
+    bottom:15px;
+    right:0;
+    background: $green-dark;
+    color: white;
+    padding: 0px 15px;
 }
 #weather {
     background: $brown-earthy; 
+    padding: 20px 30px;
+    color:white;
+    h3 {
+        margin: 10px 0px;;
+    }
+    h4 {
+        margin: 7px 0px;
+    }
+    h5 {
+        margin: 5px 0px;
+    }
+}
+.weather-description {
+    font-size:.75rem;
+}
+.weather-label{
+    font-weight:$regular-weight;
+}
+.weather-val {
+    font-weight: $semibold;
 }
