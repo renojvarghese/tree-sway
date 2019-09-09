@@ -1,5 +1,8 @@
 import "./scss/main.scss";
 import env from './env.js';
+
+
+import "./js/visualization.js";
 require.context("../static", true);
 
 
