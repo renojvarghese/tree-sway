@@ -19,16 +19,15 @@ var config = {
 
 var game = new Phaser.Game(config);
 
-var fpsText;
 var particles;
 var emitter;
 var x = 0;
 var y = 0;
 var points = [];
 
-//fetch("http://localhost:3000").then( res => res.json()).then(json => console.log(json));
 
-var target = [0,0];
+
+var target = [width/2,height/2];
 var curr = {x: 0, y:0};
 var tweens = null;
 var speed = 0.5;
@@ -37,29 +36,41 @@ function distance(x1,y1, x2,y2) {
         Math.pow(Math.abs(x1 - x2),2) + Math.pow(Math.abs(y1 - y2),2)
     )
 }
-function preload ()
+function preload()
 {
     this.load.image('particles', './static/flare.png');
 }
 
+function nextPoint(p) {
+    var x = width / 2 + p[0] * 1000
+    var y = height / 2 + p[1] * 1000
+    return [x,y]
+}
+function insideCircle(cx,cy,r,x,y) {
+    return (x-cx) *(x-cx) + (y-cy) * (y-cy) <= r * r;
+}
 function movePoint() {
-    if (points.length > 0) {
-       target = points.shift();
-    } 
-    else {
-        //fetch("localhost:3000").then( res => res.json()).then(json => console.log(json))
-        target = [Math.random()* width, Math.random()* height];
+    // if (points.length > 0) {
+    //     target = nextPoint(points.shift());
+    // } 
+    // else {
+    //     fetch("http://localhost:3000/").then( res => res.json()).then(json => points = json);
+    // }
+    let randX = Math.random()* width;
+    let randY = Math.random()* height;
+    while (!insideCircle(width/2,height/2,200,randX,randY)) {
+        randX = Math.random()* width;
+        randY = Math.random()* height;
     }
+    target = [randX,randY];
     tweens.
         add({
         targets: curr,
         x: { from: curr.x, to: target[0] },
         y: { from: curr.y, to: target[1]},
-        // alpha: { start: 0, to: 1 },
-        // alpha: 1,
-        // alpha: '+=1',
+
         
-        ease: 'Linear',       // 'Cubic', 'Elastic', 'Bounce', 'Back'
+        ease: 'Linear',    
         duration: distance(curr.x,curr.y,target[0],target[1])/speed,
         onComplete: movePoint,
         repeat: 0,            // -1: infinity
@@ -74,7 +85,7 @@ function create ()
     emitter = particles.createEmitter({
         alpha: { start: 1, end: 0 },
         scale: { start: 0.5, end: .5 },
-        //tint: { start: 0xff945e, end: 0xf3945e },
+        tint: { start: 0x0f945e, end: 0x0f945e },
         speed: 0,
         accelerationY: 0,
         angle: { min: -85, max: -95 },
@@ -82,8 +93,8 @@ function create ()
         lifespan: { min: 2000, max: 2000 },
         blendMode: 'ADD',
         frequency: 2,
-        x: 0,
-        y: 0
+        x: width/2,
+        y: height/2
     });
     tweens = this.tweens;
     //console.log(this.tweens)

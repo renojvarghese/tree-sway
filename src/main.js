@@ -59,3 +59,6 @@ const items = {
 const weather = new WeatherBox(env.weather_key, items);
 weather.refreshWeather();
 setInterval(function(){ weather.refreshWeather(); }, 5000);
+
+
+fetch("http://localhost:3000/").then( res => res.json()).then(json => console.log(json));
