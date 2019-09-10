@@ -28,9 +28,9 @@ var points = [];
 
 
 var target = [width/2,height/2];
-var curr = {x: 0, y:0};
+var curr = {x: width/2, y:height/2};
 var tweens = null;
-var speed = 0.5;
+var speed = .25;
 function distance(x1,y1, x2,y2) {
     return Math.sqrt(
         Math.pow(Math.abs(x1 - x2),2) + Math.pow(Math.abs(y1 - y2),2)
@@ -70,7 +70,7 @@ function movePoint() {
         y: { from: curr.y, to: target[1]},
 
         
-        ease: 'Linear',    
+        ease: 'EASE_OUT',    
         duration: distance(curr.x,curr.y,target[0],target[1])/speed,
         onComplete: movePoint,
         repeat: 0,            // -1: infinity
@@ -83,15 +83,15 @@ function create ()
     particles = this.add.particles('particles');
 
     emitter = particles.createEmitter({
-        alpha: { start: 1, end: 0 },
-        scale: { start: 0.5, end: .5 },
-        tint: { start: 0x0f945e, end: 0x0f945e },
+        alpha: { start: .5, end: 0 },
+        scale: { start: .6, end: .5 },
+        tint: { start: 0x0e645e, end: 0x0e645e },
         speed: 0,
         accelerationY: 0,
         angle: { min: -85, max: -95 },
         rotate: { min: -180, max: 180 },
         lifespan: { min: 2000, max: 2000 },
-        blendMode: 'ADD',
+        blendMode: 1,
         frequency: 2,
         x: width/2,
         y: height/2
