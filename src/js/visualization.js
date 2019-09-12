@@ -8,7 +8,7 @@ var config = {
     type: Phaser.WEBGL,
     width: width,
     height: height,
-    backgroundColor: '#000',
+    transparent: true,
     parent: 'visual',
     scene: {
         preload: preload,
@@ -83,14 +83,14 @@ function create ()
     particles = this.add.particles('particles');
 
     emitter = particles.createEmitter({
-        alpha: { start: .5, end: 0 },
-        scale: { start: .6, end: .5 },
-        tint: { start: 0x0e645e, end: 0x0e645e },
+        alpha: { start: 1, end: 0 },
+        scale: { start: .4, end: .25 },
+        //tint: { start: 0x0e645e, end: 0x0e645e },
         speed: 0,
         accelerationY: 0,
         angle: { min: -85, max: -95 },
         rotate: { min: -180, max: 180 },
-        lifespan: { min: 2000, max: 2000 },
+        lifespan: { min: 20000, max: 20000 },
         blendMode: 1,
         frequency: 2,
         x: width/2,

@@ -37,7 +37,7 @@ class WeatherBox {
             return res.json();
         }).then(json => {
             let t = this.items;
-            t["temp"].updateRef(json.main.temp);
+            t["temp"].updateRef(Math.floor(json.main.temp - 273));
             t["humidity"].updateRef(json.main.humidity);
             t["precip"].updateRef(json.weather[0].description);
             t["pressure"].updateRef(json.main.pressure);
@@ -59,6 +59,3 @@ const items = {
 const weather = new WeatherBox(env.weather_key, items);
 weather.refreshWeather();
 setInterval(function(){ weather.refreshWeather(); }, 5000);
-
-
-fetch("http://localhost:3000/").then( res => res.json()).then(json => console.log(json));

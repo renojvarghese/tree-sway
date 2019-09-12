@@ -1,9 +1,13 @@
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,900&display=swap');
-$green-light: #026633;
-$green-dark: #085025;
-$brown-earthy: #963A2F;
-$brown-sandy: #ECB984;
-$header-family: "Source Sans Pro", sans-serif;
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono:400,600,700,900&display=swap');
+// $green-light: #026633;
+// $green-dark: #085025;
+// $brown-earthy: #963A2F;
+// $brown-sandy: #ECB984;
+$green-light: #000;
+$green-dark: #000;
+$brown-earthy: #fff;
+$brown-sandy: #fff;
+$header-family: "Roboto Mono", sans-serif;
 $regular-weight: 400;
 $semibold: 600;
 $bold: 700;
@@ -31,7 +35,7 @@ body {
 #title {
     background: $brown-sandy;
     text-align: right;
-    padding: 20px 30px;
+    padding: 3% 30px;
 }
 .title-header {
     font-size: 3rem;
@@ -57,9 +61,33 @@ body {
     text-align: center;
     margin: 5px;
 }
-#visual {
+#visual-container {
     background: $green-light;
     position: relative;
+    iframe {
+        border:0;
+        position: absolute;
+        top:0;
+        left:0;
+        filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); /* Firefox 10+ */
+        filter: gray; /* IE6-9 */
+          -webkit-filter: grayscale(99%); /* Chrome 19+ & Safari 6+ */
+          -webkit-backface-visibility: hidden;  /* Fix for transition flickering */
+    }
+}
+
+iframe {
+    filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); /* Firefox 10+ */
+    filter: gray; /* IE6-9 */
+      -webkit-filter: grayscale(99%); /* Chrome 19+ & Safari 6+ */
+      -webkit-backface-visibility: hidden;  /* Fix for transition flickering */
+}
+#visual {
+    width:100%;
+    height:100%;
+    position: absolute;
+    top:0;
+    left:0;
 }
 .visual-description-box {
     position: absolute;
@@ -72,7 +100,6 @@ body {
 #weather {
     background: $brown-earthy; 
     padding: 20px 30px;
-    color:white;
     h3 {
         margin: 10px 0px;;
     }
@@ -84,7 +111,7 @@ body {
     }
 }
 .weather-description {
-    font-size:.75rem;
+    font-size:1rem;
 }
 .weather-label{
     font-weight:$regular-weight;
