@@ -30,7 +30,15 @@ var points = [];
 var target = [width/2,height/2];
 var curr = {x: width/2, y:height/2};
 var tweens = null;
-var speed = .25;
+var speed = .05;
+
+
+fetch("http://localhost:3000/").then( res => res.json()).then(json => points = json);
+setInterval(function () {
+    fetch("http://localhost:3000/").then( res => res.json()).then(json => points = points.concat(json));
+}, 10000);
+
+
 function distance(x1,y1, x2,y2) {
     return Math.sqrt(
         Math.pow(Math.abs(x1 - x2),2) + Math.pow(Math.abs(y1 - y2),2)
@@ -42,27 +50,32 @@ function preload()
 }
 
 function nextPoint(p) {
-    var x = width / 2 + p[0] * 1000
-    var y = height / 2 + p[1] * 1000
+    
+    var x = -3900 + width/2 +  p[0] * 20000
+    var y = -800 + height/2 + p[1] * 20000
+    console.log([x,y])
     return [x,y]
 }
 function insideCircle(cx,cy,r,x,y) {
     return (x-cx) *(x-cx) + (y-cy) * (y-cy) <= r * r;
 }
 function movePoint() {
-    // if (points.length > 0) {
-    //     target = nextPoint(points.shift());
-    // } 
-    // else {
-    //     fetch("http://localhost:3000/").then( res => res.json()).then(json => points = json);
-    // }
-    let randX = Math.random()* width;
-    let randY = Math.random()* height;
-    while (!insideCircle(width/2,height/2,200,randX,randY)) {
-        randX = Math.random()* width;
-        randY = Math.random()* height;
+    console.log(points)
+    if (points.length > 0) {
+        target = nextPoint(points.shift());
+    } 
+    else {
+       
     }
-    target = [randX,randY];
+    
+    
+    // let randX = Math.random()* width;
+    // let randY = Math.random()* height;
+    // while (!insideCircle(width/2,height/2,200,randX,randY)) {
+    //     randX = Math.random()* width;
+    //     randY = Math.random()* height;
+    // }
+    // target = [randX,randY];
     tweens.
         add({
         targets: curr,
@@ -71,9 +84,9 @@ function movePoint() {
 
         
         ease: 'EASE_OUT',    
-        duration: distance(curr.x,curr.y,target[0],target[1])/speed,
+        duration: 500,
         onComplete: movePoint,
-        repeat: 0,            // -1: infinity
+        repeat: 0,        
         yoyo: false
     });
 }
@@ -84,8 +97,8 @@ function create ()
 
     emitter = particles.createEmitter({
         alpha: { start: 1, end: 0 },
-        scale: { start: .4, end: .25 },
-        //tint: { start: 0x0e645e, end: 0x0e645e },
+        scale: { start: .4, end: .1 },
+        //tint: { start: 0x165F66, end: 0x165F66 },
         speed: 0,
         accelerationY: 0,
         angle: { min: -85, max: -95 },
