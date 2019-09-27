@@ -2,51 +2,13 @@ import "./scss/main.scss";
 import env from './env.js';
 
 
-import "./js/visualization.js";
+import {init} from "./js/visualization";
+import {WeatherItem, WeatherBox} from "./js/weather"
 require.context("../static", true);
 
 
-class WeatherItem {
-    constructor(ref) {
-        this.ref = ref;
-        this.node = document.querySelector(ref);
-    }
-    updateRef(new_data) {
-        if (!this.node) {
-            console.log("CANNOT FIND: " + this.ref);
-        }
-        this.node.innerHTML = "" + new_data;
-    }
-    
-}
-class WeatherBox {
-    constructor(key, weather_items, lat, lon, ref) {
-        this.key = key || "";
-        this.ref = ref || "#weather";
-        this.lat = lat || 41.27770;
-        this.lon = lon || 73.4958;
-        this.items = weather_items || {};
+const vis_manager = init();
 
-    }
-
-    refreshWeather() {
-        fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${this.lat}&lon=${this.lon}&appid=${this.key}`).then((res,err) => {
-            if (err){
-                return console.log(err);
-            }
-            return res.json();
-        }).then(json => {
-            let t = this.items;
-            t["temp"].updateRef(Math.floor(json.main.temp - 273));
-            t["humidity"].updateRef(json.main.humidity);
-            t["precip"].updateRef(json.weather[0].description);
-            t["pressure"].updateRef(json.main.pressure);
-            t["wind_speed"].updateRef(json.wind.speed);
-            t["wind_dir"].updateRef(json.wind.deg);
-            //console.log(JSON.stringify(json));
-        });
-    }
-}
 
 const items = {
     temp: new WeatherItem("#temp"),
@@ -58,4 +20,10 @@ const items = {
 }
 const weather = new WeatherBox(env.weather_key, items);
 weather.refreshWeather();
-setInterval(function(){ weather.refreshWeather(); }, 5000);
+setInterval(function(){ 
+    weather.refreshWeather(); 
+    vis_manager.windX = weather.windX;
+    vis_manager.windY = weather.windY;
+}, 1000);
+
+
