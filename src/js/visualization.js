@@ -4,8 +4,8 @@ import { endianness } from "os";
 // to scale and move orby mc particles
 const scaleX = 1
 const scaleY = 1;
-const offsetX = 0;
-const offsetY = 0;
+const offsetX = -200;
+const offsetY = -200;
 
 // modify wind particles
 const windConfig = [
