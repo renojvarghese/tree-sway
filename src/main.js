@@ -1,5 +1,6 @@
 import "./scss/main.scss";
 import env from './env.js';
+import moment from "moment";
 
 
 import {init} from "./js/visualization";
@@ -18,12 +19,27 @@ const items = {
     wind_speed: new WeatherItem("#wind-speed"),
     wind_dir: new WeatherItem("#wind-dir")
 }
+
+
 const weather = new WeatherBox(env.weather_key, items);
 weather.refreshWeather();
-setInterval(function(){ 
+function update(){
     weather.refreshWeather(); 
     vis_manager.windX = weather.windX;
     vis_manager.windY = weather.windY;
-}, 1000);
+    document.getElementById("date").innerHTML = moment().format('ll');  
+}
+setTimeout(function() {
+    weather.refreshWeather(); 
+    vis_manager.windX = weather.windX;
+    vis_manager.windY = weather.windY;
+    document.getElementById("date").innerHTML = moment().format('ll'); 
+}, 1000)
+setInterval(function() {
+    weather.refreshWeather(); 
+    vis_manager.windX = weather.windX;
+    vis_manager.windY = weather.windY;
+    document.getElementById("date").innerHTML = moment().format('ll'); 
+}, 1 * 60 * 1000);
 
 

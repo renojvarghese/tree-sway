@@ -1,5 +1,5 @@
-const windScale = 1
-const compass = ["North", "North-Northeast", "Northeast", "East-Northeast", "East", "East-Southeast", "Southeast", "South-Southeast", "South", "South-Southwest", "Southwest", "West-Southwest", "West", "West-Northwest", "Northwest", "North-Northwest"];
+const windScale = 2
+const compass = ["North", "North-Northeast", "Northeast", "East-Northeast", "East", "East-Southeast", "Southeast", "South-Southeast", "South", "South-Southewest", "Southwest", "West-Southwest", "West", "West-Northwest", "Northwest", "North-Northwest"];
 
 export class WeatherItem {
     constructor(ref) {
@@ -12,6 +12,13 @@ export class WeatherItem {
         }
         this.node.innerHTML = "" + new_data;
     }
+    updateClass(new_class) {
+        if (!this.node) {
+            console.log("CANNOT FIND: " + this.ref);
+        }
+        console.log(new_class);
+        this.node.className =  new_class;
+    }
     
 }
 export class WeatherBox {
@@ -19,7 +26,7 @@ export class WeatherBox {
         this.key = key || "";
         this.ref = ref || "#weather";
         this.lat = lat || 41.27770;
-        this.lon = lon || 73.4958;
+        this.lon = lon || -73.4958;
         this.items = weather_items || {};
         
         this.windScale = windScale;
@@ -35,14 +42,18 @@ export class WeatherBox {
 
     updateWind(speed, deg) {
         this.windSpeed = this.windScale * speed;
-
+        deg += 90
         let rad = deg * Math.PI / 180;
 
         this._windX = Math.cos(rad) * this.windSpeed * this.windScale;
-        this._windY = Math.sin(rad) * this.windSpeed * this.windScale * -1
+        this._windY = Math.sin(rad) * this.windSpeed * this.windScale;
+        //console.log(this.windX, this.windY)
+       
     }
     convertDegToCompass(deg) {
+        console.log(deg,compass[(Math.floor((deg / 22.5) + 0.5)) % 16])
         return compass[(Math.floor((deg / 22.5) + 0.5)) % 16]
+        
     }
     refreshWeather() {
         let context = this;
@@ -58,7 +69,7 @@ export class WeatherBox {
             t["precip"].updateRef(json.weather[0].description);
             t["pressure"].updateRef(json.main.pressure);
             t["wind_speed"].updateRef(json.wind.speed);
-            t["wind_dir"].updateRef(context.convertDegToCompass(json.wind.deg));
+            t["wind_dir"].updateClass(context.convertDegToCompass(json.wind.deg));
             context.updateWind(json.wind.speed, json.wind.deg)
         });
     }

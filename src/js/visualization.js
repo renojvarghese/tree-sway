@@ -2,16 +2,16 @@ import "phaser";
 import { endianness } from "os";
 
 // to scale and move orby mc particles
-const scaleX = 1
-const scaleY = 1;
-const offsetX = -200;
-const offsetY = -200;
+const scaleX = 7000
+const scaleY = 1400;
+const offsetX = 2200;
+const offsetY = -600;
 
 // modify wind particles
 const windConfig = [
     {
         alpha: {min: .2, max: .4 },
-        scale: 0.02,
+        scale: 0.015,
         speed: {min: 10, max: 20},
         accelerationY: 0,
         lifespan: 40000,
@@ -21,7 +21,7 @@ const windConfig = [
     },
     {
         alpha: {min: .3, max: .5 },
-        scale: 0.03,
+        scale: 0.005,
         speed: {min: 10, max: 20},
         accelerationY: 0,
         lifespan: 40000,
@@ -31,7 +31,7 @@ const windConfig = [
     },
     {
         alpha: {min: .4, max: .6 },
-        scale: 0.04,
+        scale: 0.0075,
         speed: {min: 10, max: 20},
         accelerationY: 0,
         lifespan: 40000,
@@ -125,8 +125,8 @@ export function init() {
 
     function nextPoint(p) {
 
-        let x = offsetX + ox + width/2  + p[0] * sx * scaleX
-        let y = offsetY + oy + height/2 + p[1] * sy * scaleY
+        let x = offsetX + width/2  + p[0]  * scaleX
+        let y = offsetY  + height/2 + p[1]  * scaleY
         return [x,y]
     }
     function insideCircle(cx,cy,r,x,y) {
@@ -135,6 +135,7 @@ export function init() {
     function movePoint() {
         if (points.length > 0) {
             target = nextPoint(points.shift());
+            //console.log(target)
         }
         
         
@@ -167,14 +168,12 @@ export function init() {
         particles = this.add.particles('particles');
 
         emitter = particles.createEmitter({
-            alpha: { start: .03, end: 0 },
-            scale: { start: .04, end: .04 },
-            //tint: { start: 0x165F66, end: 0x165F66 },
+            alpha: { start: .05, end: 0 },
+            scale: 0.01,
+            tint: 0x74e343,
             speed: 0,
             accelerationY: 0,
-            angle: { min: -85, max: -95 },
-            rotate: { min: -180, max: 180 },
-            lifespan: { min: 10000, max: 10000 },
+            lifespan: 8000,
             blendMode: 1,
             frequency: .01,
             x: width/2,
@@ -191,6 +190,7 @@ export function init() {
 
     let xOff = -100
     let yOff = -100;
+    const windScale = 1;
     function update (time, delta)
     {
         
@@ -211,7 +211,8 @@ export function init() {
                 }
             }
             w.setPosition(randX, randY)
-            w.setGravity(manager.windX, manager.windY)
+            //console.log(manager.windX, manager.windY)
+            w.setGravity(manager.windX * windScale, manager.windY *windScale)
         })
         
         emitter.setPosition(curr.x,curr.y)
